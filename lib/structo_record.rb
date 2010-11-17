@@ -30,6 +30,11 @@ module StructoRecord
       return JSON.parse( json_object )
     end
    
+    def delete(id)
+     url "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}"
+     RestClient.delete url
+    end
+   
     def search(attributes = {})
       url_request = ""
       if attributes != {}
