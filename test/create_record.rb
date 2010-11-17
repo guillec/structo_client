@@ -11,7 +11,7 @@ context "Structo_Record" do
 
   test "Creates a rest resource without any record attributes" do
     record = Record.new
-    resource = record.resource
+    resource = record.query
     public_key = APP_CONFIG['structo']['public_key']
     private_key = APP_CONFIG['structo']['private_key']
     assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}" == resource.url
@@ -19,7 +19,7 @@ context "Structo_Record" do
 
   test "Creates a rest resoucrece with one record attribute" do
     record = Record.new
-    resource = record.resource({'name' => 'john'})
+    resource = record.query({'name' => 'john'})
     public_key = APP_CONFIG['structo']['public_key']
     private_key = APP_CONFIG['structo']['private_key']
     assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}&#{record.class.to_s.downcase}[name]=john" == resource.url
@@ -27,7 +27,7 @@ context "Structo_Record" do
   
   test "Create a rest recosource with more than one record attribute" do
     record = Record.new
-    resource = record.resource({'name' => 'john', 'place' => 'baltimore'})
+    resource = record.query({'name' => 'john', 'place' => 'baltimore'})
     public_key = APP_CONFIG['structo']['public_key']
     private_key = APP_CONFIG['structo']['private_key']
     assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" == resource.url
@@ -35,8 +35,10 @@ context "Structo_Record" do
 
   test "Catch a 500 error" do
     record = RecordThatDoesntExist.new
-    record.create
-    assert nil == nil
+    assert_raise StructoExceptions::InternalServerError do 
+      record.create
+    end 
+
   end
  
   #test "Actually post something to the app" do
