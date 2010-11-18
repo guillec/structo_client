@@ -7,31 +7,31 @@ module StructoRecord
   class Base
 
     def initialize
-      @app_name = APP_CONFIG['structo']['name']
-      @public_key = APP_CONFIG['structo']['public_key']
-      @private_key = APP_CONFIG['structo']['private_key']
+      @app_name = "mytest"#APP_CONFIG['structo']['name']
+      @public_key = "nidfspnsooxxwpxcwmuhiedtpxkgxauu"#APP_CONFIG['structo']['public_key']
+      @private_key = "olqvvgvgpjbsfoqbcwfugolppzmdsmey"#APP_CONFIG['structo']['private_key']
     end
 
     def create(attributes = {})
-      url_request = query( attributes )
-      json_object = post( url_request )
+      url_request = query('create', attributes )
+      json_object = post_record( url_request )
       return JSON.parse(json_object)
     end
     
-    def retreive(id)
+    def retrieve(id)
       url_request = retrieve_query( id ) 
-      json_object = get( url_request )
+      json_object = get_record( url_request )
       return JSON.parse( json_object )
     end 
 
     def update(id, attributes = {})
       url_request = update_query(id, attributes )
-      json_object = post( url_request )
+      json_object = post_record( url_request )
       return JSON.parse( json_object )
     end
    
     def delete(id)
-     url "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}"
+     url = "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}"
      RestClient.delete url
     end
    
@@ -42,7 +42,7 @@ module StructoRecord
       else
         url_request = query('list')
       end
-      json_object = get( url_request )
+      json_object = get_record( url_request )
       return JSON.parse(json_object)
     end
  
@@ -90,7 +90,7 @@ module StructoRecord
       record_fields
     end
    
-    def get(resource)
+    def get_record(resource)
       response = resource.get { |response, request, result, &block|
         case response.code
         when 200
@@ -104,7 +104,8 @@ module StructoRecord
       }
     end
  
-    def post(resource)
+    def post_record(resource)
+      p resource.url
       response = resource.post("") { |response, request, result, &block|
         case response.code
         when 200
