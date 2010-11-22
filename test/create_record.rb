@@ -11,26 +11,20 @@ context "Structo_Record" do
 
   test "Creates a rest resource without any record attributes" do
     record = Record.new
-    resource = record.query
-    public_key = APP_CONFIG['structo']['public_key']
-    private_key = APP_CONFIG['structo']['private_key']
-    assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}" == resource.url
+    resource = record.query('create')
+    assert "#{STRUCTO_APP_NAME}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}" == resource.url
   end
 
   test "Creates a rest resoucrece with one record attribute" do
     record = Record.new
-    resource = record.query({'name' => 'john'})
-    public_key = APP_CONFIG['structo']['public_key']
-    private_key = APP_CONFIG['structo']['private_key']
-    assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}&#{record.class.to_s.downcase}[name]=john" == resource.url
+    resource = record.query('create', {'name' => 'john'})
+    assert "#{STRUCTO_APP_NAME}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}&#{record.class.to_s.downcase}[name]=john" == resource.url
   end  
   
   test "Create a rest recosource with more than one record attribute" do
     record = Record.new
-    resource = record.query({'name' => 'john', 'place' => 'baltimore'})
-    public_key = APP_CONFIG['structo']['public_key']
-    private_key = APP_CONFIG['structo']['private_key']
-    assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" == resource.url
+    resource = record.query('create', {'name' => 'john', 'place' => 'baltimore'})
+    assert "#{STRUCTO_APP_NAME}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" == resource.url
   end
 
   test "Catch a 500 error" do
@@ -43,10 +37,10 @@ context "Structo_Record" do
  
   #test "Actually post something to the app" do
   #  record = Record.new
-  #  public_key = APP_CONFIG['structo']['public_key']
-  #  private_key = APP_CONFIG['structo']['private_key']
+  #  STRUCTO_PUBLIC_KEY = APP_CONFIG['structo']['STRUCTO_PUBLIC_KEY']
+  #  STRUCTO_PRIVATE_KEY = APP_CONFIG['structo']['STRUCTO_PRIVATE_KEY']
   #  record.create({'name' => 'john', 'place' => 'baltimore'})
-  #  assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{public_key}&private_key=#{private_key}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" != nil 
+  #  assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" != nil 
   #end
 
 end

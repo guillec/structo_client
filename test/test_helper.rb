@@ -8,6 +8,9 @@ require 'yaml'
 require 'structo_record'
 require 'structo_exceptions'
 APP_CONFIG = YAML.load_file("#{dir}/config_test.yml")
+STRUCTO_APP_NAME = APP_CONFIG['structo']['name']
+STRUCTO_PUBLIC_KEY = APP_CONFIG['structo']['public_key']
+STRUCTO_PRIVATE_KEY = APP_CONFIG['structo']['private_key']
 
 ##
 # test/spec/mini 3

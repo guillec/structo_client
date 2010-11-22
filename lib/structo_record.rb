@@ -6,12 +6,6 @@ require 'structo_exceptions'
 module StructoRecord
   class Base
 
-    def initialize
-      @app_name = "mytest"#APP_CONFIG['structo']['name']
-      @public_key = "nidfspnsooxxwpxcwmuhiedtpxkgxauu"#APP_CONFIG['structo']['public_key']
-      @private_key = "olqvvgvgpjbsfoqbcwfugolppzmdsmey"#APP_CONFIG['structo']['private_key']
-    end
-
     def create(attributes = {})
       url_request = query('create', attributes )
       json_object = post_record( url_request )
@@ -31,7 +25,7 @@ module StructoRecord
     end
    
     def delete(id)
-     url = "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}"
+     url = "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}"
      RestClient.delete url
     end
    
@@ -48,28 +42,28 @@ module StructoRecord
  
     def update_query( id, attributes )
       q_params = query_params( attributes )
-      RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}#{q_params}"
+      RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}#{q_params}"
     end
 
     def query(type, attributes = {})
       case type
       when 'create'
         q_params = query_params( attributes )
-        return RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{@public_key}&private_key=#{@private_key}#{q_params}"
+        return RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}#{q_params}"
       when 'update'
         q_params = query_params( attributes )
-        return RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{@public_key}&private_key=#{@private_key}#{q_params}"
+        return RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}#{q_params}"
       when 'search'
         q_params = search_query_params( attributes )
-        return RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{@public_key}&private_key=#{@private_key}#{q_params}"
+        return RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}#{q_params}"
       when 'list'
         q_params = query_params( attributes )
-        return RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{@public_key}&private_key=#{@private_key}#{q_params}"
+        return RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}#{q_params}"
       end
     end
     
     def retrieve_query( id )
-      RestClient::Resource.new "#{@app_name}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{@public_key}&private_key=#{@private_key}"
+      RestClient::Resource.new "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}"
     end
    
     def search_query_params( attributes ) 
@@ -105,7 +99,6 @@ module StructoRecord
     end
  
     def post_record(resource)
-      p resource.url
       response = resource.post("") { |response, request, result, &block|
         case response.code
         when 200
