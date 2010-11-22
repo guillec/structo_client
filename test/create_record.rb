@@ -28,18 +28,14 @@ context "Structo_Record" do
   end
 
   test "Catch a 500 error" do
-    record = RecordThatDoesntExist.new
     assert_raise StructoExceptions::InternalServerError do 
-      record.create
+     RecordThatDoesntExist.create
     end 
-
   end
  
   #test "Actually post something to the app" do
-  #  record = Record.new
-  #  STRUCTO_PUBLIC_KEY = APP_CONFIG['structo']['STRUCTO_PUBLIC_KEY']
-  #  STRUCTO_PRIVATE_KEY = APP_CONFIG['structo']['STRUCTO_PRIVATE_KEY']
-  #  record.create({'name' => 'john', 'place' => 'baltimore'})
+  #  record = Record.create
+    #record.create({'name' => 'john', 'place' => 'baltimore'})
   #  assert "#{APP_CONFIG['structo']['name']}.structoapp.com/api/#{record.class.to_s.downcase}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}&#{record.class.to_s.downcase}[name]=john&#{record.class.to_s.downcase}[place]=baltimore" != nil 
   #end
 

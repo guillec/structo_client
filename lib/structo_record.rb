@@ -6,37 +6,41 @@ require 'structo_exceptions'
 module StructoRecord
   class Base
 
-    def create(attributes = {})
-      url_request = query('create', attributes )
-      json_object = post_record( url_request )
+    def self.create(attributes = {})
+      s = self.new
+      url_request = s.query('create', attributes )
+      json_object = s.post_record( url_request )
       return JSON.parse(json_object)
     end
     
-    def retrieve(id)
-      url_request = retrieve_query( id ) 
-      json_object = get_record( url_request )
+    def self.retrieve(id)
+      s = self.new
+      url_request = s.retrieve_query( id ) 
+      json_object = s.get_record( url_request )
       return JSON.parse( json_object )
     end 
 
-    def update(id, attributes = {})
-      url_request = update_query(id, attributes )
-      json_object = post_record( url_request )
+    def self.update(id, attributes = {})
+      s = self.new
+      url_request = s.update_query(id, attributes )
+      json_object = s.post_record( url_request )
       return JSON.parse( json_object )
     end
    
-    def delete(id)
+    def self.delete(id)
      url = "#{STRUCTO_APP_NAME}.structoapp.com/api/#{self.class.to_s.downcase}/#{id}.json?public_key=#{STRUCTO_PUBLIC_KEY}&private_key=#{STRUCTO_PRIVATE_KEY}"
      RestClient.delete url
     end
    
-    def search(attributes = {})
+    def self.search(attributes = {})
+      s = self.new
       url_request = ""
       if attributes != {}
-        url_request = query('search', attributes )
+        url_request = s.query('search', attributes )
       else
-        url_request = query('list')
+        url_request = s.query('list')
       end
-      json_object = get_record( url_request )
+      json_object = s.get_record( url_request )
       return JSON.parse(json_object)
     end
  
@@ -88,7 +92,6 @@ module StructoRecord
       response = resource.get { |response, request, result, &block|
         case response.code
         when 200
-          p "it worked"
           response
         when 500
           raise StructoExceptions::InternalServerError
