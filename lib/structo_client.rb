@@ -15,28 +15,28 @@ class StructoClient
   end
   
   def create(modl, attributes = {})
-    resource = create_query(@app_name, modl, @public_key, @private_key, attributes ) 
-    post_record resource
+    resource = StructoUrlGen.create_query(@app_name, modl, @public_key, @private_key, attributes ) 
+    StructoConnect.post_record resource
   end
   
   def retrieve(modl, id)
-    resource = retrieve_query(@app_name, modl, @public_key, @private_key, id)
-    get_record resource 
+    resource = StructoUrlGen.retrieve_query(@app_name, modl, @public_key, @private_key, id)
+    StructoConnect.get_record resource 
   end
   
   def update(modl, id, attributes)
-    resource = update_query(@app_name, modl, @public_key, @private_key, id, attributes)
-    post_record resource
+    resource = StructoUrlGen.update_query(@app_name, modl, @public_key, @private_key, id, attributes)
+    StructoConnect.post_record resource
   end
   
   def delete(modl, id)
-    resource = delete_query(@app_name, modl, @public_key, @private_key, id)
-    delete_record resource
+    resource = StructoUrlGen.delete_query(@app_name, modl, @public_key, @private_key, id)
+    StructoConnect.delete_record resource
   end
   
   def search(modl, attributes = {})
-    resource = search_query(@app_name, modl, @public_key, @private_key, attributes)
-    get_record resource
+    resource = StructoUrlGen.search_query(@app_name, modl, @public_key, @private_key, attributes)
+    StructoConnect.get_record resource
   end
   
 end
