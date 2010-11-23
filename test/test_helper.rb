@@ -6,6 +6,8 @@ require 'test/unit'
 require 'rubygems'
 require 'yaml'
 require 'structo_record'
+require 'structo_url_gen'
+require 'structo_client'
 require 'structo_exceptions'
 APP_CONFIG = YAML.load_file("#{dir}/config_test.yml")
 STRUCTO_APP_NAME = APP_CONFIG['structo']['name']
