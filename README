@@ -1,0 +1,77 @@
+Structo Client:
+
+This gem allows you to easily interface with your Structo Application.
+
+Gem Dependencies:
+gem 'rest-client'
+gem 'json'
+
+There are two ways to use this gem. 
+
+Non-MVC application:
+
+1. require 'structo_client'
+
+2. Create an instance of StructoClient:
+c = StructoClient.new("app_name", "public_key", "private_key")
+
+Your app_name must match your Structo application name.
+
+3. Start using the basic CRUD methods:
+To create:
+c.create("Person")
+
+If you have fields you need to pass them as a Hash.
+c.create("Person", {"name" => "john"})
+
+To retrieve:
+c.retrieve("Person", "id")
+
+To update:
+c.update("Person", "id", {"name" => "juan"})
+
+To delete:
+c.delete("Person", "id")
+
+To search
+If you dont pass any search criteria it will return a list of all the values.
+c.search("Person") #This will return a list
+
+If you pass search criteria it will search based on the parameters.
+c.search("Person", {"name" => "juan"}) #This will return all entries with the name Juan
+
+Adding StructoRecord to your Rails app:
+
+1. Add the gems to your rails project:
+gem 'structo_client'
+gem 'rest-client'
+gem 'json'
+
+2. Add a initializer file called structo_config.rb
+Insert the following constants:
+STRUCTO_APP_NAME='your application name'
+STRUCTO_PUBLIC_KEY='your public key'
+STRUCTO_PRIVATE_KEY='your private key'
+
+3. Add a model that extends StructoRecord::Base
+class Person < StructoRecord::Base
+end
+
+4. Using the CRUD methods:
+To create:
+p = Person.create
+If you have attribute the pass in a Hash, example:
+p = Person.create({“name” => “sam”}}
+
+To retreive:
+r = Person.retrieve(“id”)
+
+To update:
+u = Person.update(“id”, {“name” => “bob”})
+
+To delete:
+Person.delete(“id”)
+
+To search
+Person.search({“name” => “john”})
+If you just say Person.search with no attributes it will return a list of all entries.
