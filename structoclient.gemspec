@@ -6,6 +6,6 @@ Gem::Specification.new do |s|
   s.email = %q{gcarlos1@gmail.com}
   s.summary = %q{Provides a easy way to interact with your Structo application.}
   s.homepage = %q{http://www.structo.com/}
-  s.description = %q{Proces a easy way to interact with your Structo application.}
+  s.description = %q{A easy way to interact with your Structo application.}
   s.files = [ "README", "lib/structo_record.rb", "lib/structo_exceptions.rb", "lib/structo_client.rb", "lib/structo_connect.rb", "lib/structo_url_gen.rb"]
 end

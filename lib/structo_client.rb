@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'structo_url_gen'
 require 'structo_connect'
+require 'structo_exceptions'
 
 class StructoClient
   include StructoConnect
